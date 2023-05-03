@@ -15,7 +15,7 @@ public class PalindromeRestController {
     @RequestMapping(method = RequestMethod.GET,
             value = "/palindrome",
             produces = "application/json")
-    public Map<String, Boolean> palindrome(@RequestParam(value = "string") String string){
+    public Map<String, Boolean> isPalindrome(@RequestParam(value = "string") String string){
         return Collections.
                 singletonMap("isPalindrome", Text.isPalindrome(string));
     }
