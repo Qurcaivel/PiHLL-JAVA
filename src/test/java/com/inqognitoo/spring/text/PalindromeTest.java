@@ -1,17 +1,13 @@
 package com.inqognitoo.spring.text;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.util.Assert;
 
 public class PalindromeTest {
 
     @Test
     void testEmptyString(){
-        Assertions.assertThrows(IllegalArgumentException.class, ()->{
-            Text.isPalindrome("");
-        });
+        Assertions.assertThrows(IllegalArgumentException.class, ()-> Text.isPalindrome(""));
     }
 
     @Test
