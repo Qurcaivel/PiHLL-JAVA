@@ -1,6 +1,5 @@
 package com.inqognitoo.spring.control;
 
-import com.inqognitoo.spring.errors.ControllerAdvisor;
 import com.inqognitoo.spring.service.PalindromeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
