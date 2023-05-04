@@ -26,7 +26,7 @@ public class PalindromeService {
         if(response == null){
             response = Text.isPalindrome(string);
             cache.put(string, response);
-            // just a demo message about caching :|
+            // just a cache demo message :|
             logger.info("Cache \"" + string + "\" as " + response);
         }
 
