@@ -6,7 +6,7 @@ public class Text {
 
     public static boolean isPalindrome(@NotNull String text) throws IllegalArgumentException {
         if(text.isEmpty()){
-            throw new IllegalArgumentException("Passing empty string to palindrome check");
+            throw new IllegalArgumentException("Trying to classify an empty string as a palindrome");
         }
 
         int i = 0;
