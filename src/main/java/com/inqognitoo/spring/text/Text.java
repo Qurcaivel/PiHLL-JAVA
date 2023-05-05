@@ -2,6 +2,8 @@ package com.inqognitoo.spring.text;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class Text {
 
     public static boolean isPalindrome(@NotNull String text) throws IllegalArgumentException {
@@ -22,5 +24,13 @@ public class Text {
         }
 
         return true;
+    }
+
+    public static String quoted(String string){
+        return "\"" + string + "\"";
+    }
+
+    public static List<String> quoted(List<String> string){
+        return string.stream().map(Text::quoted).toList();
     }
 }
