@@ -2,6 +2,7 @@ package com.inqognitoo.spring.control;
 
 import com.inqognitoo.spring.service.CounterService;
 import com.inqognitoo.spring.service.PalindromeService;
+import com.inqognitoo.spring.statistics.Statistics;
 import com.inqognitoo.spring.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class PalindromeRestController {
@@ -43,6 +45,11 @@ public class PalindromeRestController {
         // just a post demo message :|
         logger.info("POST /palindromes " + Text.quoted(strings));
         counterService.increase();
-        return Collections.singletonMap("isPalindrome", palindromeService.test(strings));
+        List<Boolean> booleans = palindromeService.test(strings);
+        return Map.of(
+            "isPalindrome", booleans,
+            "averageLength", Statistics.averageLength(strings),
+            "averageResult", Statistics.averageBoolean(booleans)
+        );
     }
 }
