@@ -1,6 +1,8 @@
 package com.inqognitoo.spring.service;
 
 import com.inqognitoo.spring.memory.PalindromeCache;
+import com.inqognitoo.spring.persistance.Palindrome;
+import com.inqognitoo.spring.persistance.PalindromeRepository;
 import com.inqognitoo.spring.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PalindromeService {
@@ -16,21 +19,39 @@ public class PalindromeService {
             LoggerFactory.getLogger(PalindromeService.class);
 
     private final PalindromeCache cache;
+    private final PalindromeRepository repository;
 
     @Autowired
-    public PalindromeService(PalindromeCache cache){
+    public PalindromeService(PalindromeCache cache, PalindromeRepository repository){
         this.cache = cache;
+        this.repository = repository;
     }
 
     public boolean test(String string){
-        Boolean response = cache.get(string);
+        Optional<Boolean> cached = cache.get(string);
 
-        if(response == null){
-            response = Text.isPalindrome(string);
-            cache.put(string, response);
-            // just a cache demo message :|
-            logger.info("Cache \"" + string + "\" as " + response);
+        if(cached.isPresent()){
+            logger.info("Response for request '" + string + "' has been found in cache");
+            return cached.get();
         }
+
+        Optional<Palindrome> stored = repository.findById(string);
+        Palindrome palindrome;
+        boolean response;
+
+        if(stored.isPresent()){
+            logger.info("Response for request '" + string + "' has been found in redis");
+            palindrome = stored.get();
+            response = palindrome.getResponse();
+        }
+        else {
+            logger.info("Response for request '" + string + "' can't be found, make it");
+            response = Text.isPalindrome(string);
+            palindrome = new Palindrome(string, response);
+            repository.save(palindrome);
+        }
+
+        cache.put(string, response);
 
         return response;
     }

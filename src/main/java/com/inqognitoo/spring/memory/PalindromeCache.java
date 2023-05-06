@@ -3,6 +3,7 @@ package com.inqognitoo.spring.memory;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
@@ -14,8 +15,9 @@ public class PalindromeCache {
         this.cache = new ConcurrentHashMap<>();
     }
 
-    public Boolean get(String key){
-        return cache.get(key);
+    public Optional<Boolean> get(String key){
+        Boolean value = cache.get(key);
+        return Optional.ofNullable(value);
     }
 
     public void put(String key, boolean val){
