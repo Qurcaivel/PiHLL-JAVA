@@ -1,7 +1,6 @@
 package com.inqognitoo.spring.service;
 
 import com.inqognitoo.spring.memory.PalindromeCache;
-import com.inqognitoo.spring.persistance.Palindrome;
 import com.inqognitoo.spring.persistance.PalindromeRepository;
 import com.inqognitoo.spring.text.Text;
 import org.slf4j.Logger;
@@ -35,20 +34,17 @@ public class PalindromeService {
             return cached.get();
         }
 
-        Optional<Palindrome> stored = repository.findById(string);
-        Palindrome palindrome;
+        Optional<Boolean> stored = repository.get(string);
         boolean response;
 
         if(stored.isPresent()){
             logger.info("Response for request '" + string + "' has been found in redis");
-            palindrome = stored.get();
-            response = palindrome.getResponse();
+            response = stored.get();
         }
         else {
             logger.info("Response for request '" + string + "' can't be found, make it");
             response = Text.isPalindrome(string);
-            palindrome = new Palindrome(string, response);
-            repository.save(palindrome);
+            repository.put(string, response);
         }
 
         cache.put(string, response);
