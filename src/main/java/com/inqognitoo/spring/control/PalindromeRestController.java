@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 public class PalindromeRestController {
@@ -51,5 +52,18 @@ public class PalindromeRestController {
             "averageLength", Statistics.averageLength(strings),
             "averageResult", Statistics.averageBoolean(booleans)
         );
+    }
+
+    @RequestMapping(method = RequestMethod.GET,
+            value = "/async/palindrome",
+            produces = "application/json")
+    public Object isPalindromeAsync(@RequestParam(value = "string") String string){
+        // just a get demo message :|
+        logger.info("GET /async/palindrome " + Text.quoted(string));
+        CompletableFuture.runAsync(() -> {
+            counterService.increase();
+            palindromeService.test(string);
+        });
+        return Collections.singletonMap("key", string);
     }
 }

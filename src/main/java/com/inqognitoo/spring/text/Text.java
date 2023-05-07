@@ -1,12 +1,10 @@
 package com.inqognitoo.spring.text;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 
 public class Text {
 
-    public static boolean isPalindrome(@NotNull String text) throws IllegalArgumentException {
+    public static boolean isPalindrome(String text) throws IllegalArgumentException {
         if(text.isEmpty()){
             throw new IllegalArgumentException("Trying to classify an empty string as a palindrome");
         }

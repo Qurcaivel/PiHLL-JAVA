@@ -27,5 +27,4 @@ public class RedisConfiguration {
     public ValueOperations<String, Boolean> valueOperations(RedisTemplate<String, Boolean> template){
         return template.opsForValue();
     }
-
 }

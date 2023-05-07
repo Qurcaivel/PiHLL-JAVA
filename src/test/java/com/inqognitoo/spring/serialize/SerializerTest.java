@@ -6,7 +6,7 @@ import org.springframework.data.redis.serializer.SerializationException;
 
 public class SerializerTest {
 
-    // todo: заменить на мок
+    // your mock could be here :)
     private static final BooleanRedisSerializer serializer = new BooleanRedisSerializer();
 
     private static final byte[] TRUE_BYTES = "true".getBytes();
@@ -19,7 +19,7 @@ public class SerializerTest {
 
     @Test
     void testDeserializeNull(){
-        Assertions.assertThrows(SerializationException.class, () -> serializer.deserialize(null));
+        Assertions.assertNull(serializer.deserialize(null));
     }
 
     @Test
@@ -34,7 +34,6 @@ public class SerializerTest {
         Assertions.assertEquals(Boolean.FALSE, serializer.deserialize(FALSE_BYTES));
     }
 
-    // todo: подумать, нужно ли оно вообще
     @Test
     void testDeserializeInvalid(){
         Assertions.assertNull(serializer.deserialize("True".getBytes()));
