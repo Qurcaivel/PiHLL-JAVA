@@ -3,12 +3,10 @@ package com.inqognitoo.spring.persistance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Repository
-@Transactional
 public class PalindromeRepository {
 
     private final ValueOperations<String, Boolean> operations;
